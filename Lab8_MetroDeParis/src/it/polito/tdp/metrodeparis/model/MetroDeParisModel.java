@@ -71,12 +71,12 @@ public class MetroDeParisModel {
 		s+="Percorso: [ "+f1.toString()+"-";
 		
 		for(DefaultWeightedEdge dwe:temp){
-			tempo+=metro.getEdgeWeight(dwe);
+			tempo+=metro.getEdgeWeight(dwe)+30;
 			s+=metro.getEdgeTarget(dwe).getNomeFermata()+"-";
 		}
 		s+=f2.toString()+" ]\n";
-		tempo+=(double)30*temp.size()/(double)60;
-		s+="Tempo stimato: "+tempo;
+		
+		s+="Tempo stimato: "+tempo/(double)60;
 		//s+=temp.toString();
 		return s;
 		
