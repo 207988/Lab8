@@ -47,12 +47,12 @@ public class MetroDeParisModel {
 		
 		for(Connessione c:conn){
 			
-			if(!metro.containsEdge(fermate.get(c.getIdP()), fermate.get(c.getIdA()))){
+			//if(!metro.containsEdge(fermate.get(c.getIdP()), fermate.get(c.getIdA()))){
 				Fermata f1=fermate.get(c.getIdP());
 				Fermata f2=fermate.get(c.getIdA());
 				DefaultWeightedEdge dwe=metro.addEdge(f1,f2);
 				metro.setEdgeWeight(dwe, this.calcolaTempo(f1, f2, linee.get(c.getIdLinea())));
-			}
+			//}
 				
 		}
 		
@@ -65,16 +65,19 @@ public class MetroDeParisModel {
 	public String camminoMinimo(Fermata f1,Fermata f2){
 		String s="";
 		List<DefaultWeightedEdge>temp=DijkstraShortestPath.findPathBetween(metro, f1, f2);
-		/*
-		s+="Percorso: [ "+f1.toString();
+		
+		double tempo=0;
+		
+		s+="Percorso: [ "+f1.toString()+"-";
 		
 		for(DefaultWeightedEdge dwe:temp){
-			s+=" ";
+			tempo+=metro.getEdgeWeight(dwe);
+			s+=metro.getEdgeTarget(dwe).getNomeFermata()+"-";
 		}
-		
-		
-		s+="Tempo stimato: "+(temp.size()*30)/60;*/
-		s+=temp.toString();
+		s+=f2.toString()+" ]\n";
+		tempo+=(double)30*temp.size()/(double)60;
+		s+="Tempo stimato: "+tempo;
+		//s+=temp.toString();
 		return s;
 		
 	}
