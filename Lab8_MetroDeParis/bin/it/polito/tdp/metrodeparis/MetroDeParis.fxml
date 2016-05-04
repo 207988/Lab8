@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.metrodeparis.MetroDeParisController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="it.polito.tdp.metrodeparis.MetroDeParisController">
+   <top>
+      <Label text="Lab8_MetroParigi" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="15.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../rsc/RATP.png" />
+                     </image>
+                  </ImageView>
+                  <VBox spacing="15.0">
+                     <children>
+                        <Label text="Seleziona una Stazione di Partenza:" />
+                        <ComboBox fx:id="cmbPartenza" prefWidth="150.0" />
+                        <Label text="Seleziona una Stazione di Arrivo:" />
+                        <ComboBox fx:id="cmbArrivo" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="150.0" prefWidth="112.0">
+                     <children>
+                        <Button fx:id="btnCalcola" mnemonicParsing="false" onAction="#doCalcola" text="Calcola distanza" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <TextArea fx:id="txtOutput" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>
