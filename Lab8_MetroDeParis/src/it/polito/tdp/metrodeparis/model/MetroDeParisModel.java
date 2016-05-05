@@ -42,21 +42,17 @@ public class MetroDeParisModel {
 			linee.put(l.getIdLinea(),l);
 		}
 		
-		conn=condao.trovaConnessioni();			
+		conn=condao.trovaConnessioni();	
 			
-		//System.out.println(conn.size());
+		
 		
 		for(Connessione c:conn){
-			
-			//if(!metro.containsEdge(fermate.get(c.getIdP()), fermate.get(c.getIdA()))){
-				Fermata f1=fermate.get(c.getIdP());
-				//f1.aggiungiLinea(linee.get(c.getIdLinea()));
-				Fermata f2=fermate.get(c.getIdA());
-				ArcoMetro dwe=metro.addEdge(f1,f2);
-				metro.setEdgeWeight(dwe, this.calcolaTempo(f1, f2, linee.get(c.getIdLinea())));
-				dwe.setLinea(linee.get(c.getIdLinea()));
-			//}
-				
+			Fermata f1=fermate.get(c.getIdP());
+			//f1.aggiungiLinea(linee.get(c.getIdLinea()));
+			Fermata f2=fermate.get(c.getIdA());
+			ArcoMetro dwe=metro.addEdge(f1,f2);
+			metro.setEdgeWeight(dwe, (this.calcolaTempo(f1, f2, linee.get(c.getIdLinea()))));
+			dwe.setLinea(linee.get(c.getIdLinea()));		
 		}
 		
 		
@@ -73,12 +69,17 @@ public class MetroDeParisModel {
 		
 		s+="Percorso: "+f1.toString()+"-";
 		Linea oldLinea=null;
-		
-		for(ArcoMetro dwe:temp){
-			//double intervallo=dwe.getLinea().getIntervallo();
-			//TEMPO PERCORSO+30SEC
-			tempo+=((metro.getEdgeWeight(dwe)*3600)+30);
+		int i=0;
+		for(ArcoMetro dwe:temp){		
 			
+			//DEBUG
+			//System.out.println(metro.getEdgeWeight(dwe));
+			//System.out.println(metro.getEdgeSource(dwe).getCodF()+"--"+metro.getEdgeTarget(dwe).getCodF());
+			
+			//TEMPO PERCORRENZA TRATTA		
+			tempo+=((metro.getEdgeWeight(dwe)));
+			
+			//CONTROLLO SE DEVO INSERIRE  TEMPO INTERVALLO CAMBIO LINEA
 			if(oldLinea!=dwe.getLinea()){
 				//CAMBIO LINEA
 				if(oldLinea!=null){
@@ -86,22 +87,23 @@ public class MetroDeParisModel {
 					tempo+=dwe.getLinea().getIntervallo()-30;
 				}
 				//IL PRIMO NODO DOVRA' POTER USARE PER FORZA LA LINEA DEL PRIMO ARCO
-				//QUINDI NON CONTO INTERVALLI
-				
+				//QUINDI NON CONTO INTERVALLI				
 			}
 				
-			s+=metro.getEdgeTarget(dwe).getNomeFermata()+"-";
+			s+=metro.getEdgeTarget(dwe).getNomeFermata();
+			//AGGIUNTA TEMPO FERMATA 30 SEC
+			//NON LO FACCIO PER ULTIMA FERMATA
+			if(i<temp.size()-1){
+				tempo+=30;
+				s+="-";
+			}
+			//CAMBIO LINEA IN USO
 			oldLinea=dwe.getLinea();
+			//PER CONDIZIONE ULTIMA FERMATA
+			i++;
 		}
-		s+=f2.toString()+" ]\n";
-		
-		
-		
-		
-		//s+="Tempo stimato: "+tempo/(double)(60*60);
-		//s+=temp.toString();
-		return this.formatTempo(tempo, s);
-		
+		s+="\n";
+		return this.formatTempo(tempo, s);		
 	}
 	
 	
@@ -121,7 +123,7 @@ public class MetroDeParisModel {
 	private double calcolaTempo(Fermata f1,Fermata f2,Linea l){
 		LatLng pos1= new LatLng(f1.getX(),f1.getY());
 		LatLng pos2= new LatLng(f2.getX(),f2.getY());
-		return LatLngTool.distance(pos1,pos2,LengthUnit.KILOMETER)/l.getVel();
+		return LatLngTool.distance(pos1,pos2,LengthUnit.KILOMETER)/(l.getVel()/3600);
 	}
 	
 	private String formatTempo(double tempo,String s){

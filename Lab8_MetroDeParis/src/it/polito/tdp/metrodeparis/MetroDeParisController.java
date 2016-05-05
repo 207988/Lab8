@@ -43,6 +43,7 @@ public class MetroDeParisController {
     @FXML
     void doCalcola(ActionEvent event) {
     	String s=model.camminoMinimo(cmbPartenza.getValue(), cmbArrivo.getValue());
+    	
     	txtOutput.setText(s);
     }
 
