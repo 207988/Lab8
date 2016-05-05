@@ -1,11 +1,16 @@
 package it.polito.tdp.metrodeparis.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fermata {
 	
 	private int codF;
 	private String nomeFermata;
 	private double x;
 	private double y;
+	//
+	//private List<Linea>linee=new ArrayList<Linea>(); NON USATO
 	
 	public Fermata(int codF, String nomeFermata, double x, double y) {
 		super();
@@ -59,8 +64,20 @@ public class Fermata {
 		return true;
 	}
 	
+	/*
+	public void aggiungiLinea(Linea l){
+		if(checkLinea(l)==false)
+			linee.add(l);
+		
+		return;
+	}
 	
-	
+	public boolean checkLinea(Linea l){
+		if(linee.contains(l))
+			return true;
+		return false;
+	}
+	*/
 	
 	
 

@@ -12,7 +12,7 @@ public class Linea {
 		this.idLinea = idLinea;
 		this.nomeLinea = nomeLinea;
 		this.vel = vel;
-		this.intervallo = intervallo;
+		this.intervallo = intervallo*60;
 	}
 
 	public int getIdLinea() {
@@ -51,6 +51,11 @@ public class Linea {
 		if (idLinea != other.idLinea)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return nomeLinea;
 	}
 	
 	
